@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Folder Name="/src/api/">
+      <Project Path="src/api/OceanCare.Api/OceanCare.Api.csproj" />
+    </Folder>
+  </Folder>
+</Solution>
