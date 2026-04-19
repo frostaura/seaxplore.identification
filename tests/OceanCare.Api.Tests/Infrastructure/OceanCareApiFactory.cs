@@ -18,9 +18,7 @@ public sealed class OceanCareApiFactory : WebApplicationFactory<Program>
             configBuilder.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["ConnectionStrings:Default"] = $"Data Source={Path.Combine(_databaseDirectory, "oceancare-tests.db")}",
-                ["Jwt:Key"] = "OceanCare-Tests-Super-Secret-Key-12345",
-                ["Jwt:Issuer"] = "OceanCare.Tests",
-                ["Jwt:Audience"] = "OceanCare.Tests.Client"
+                ["Logging:LogLevel:Default"] = "Warning"
             });
         });
     }
