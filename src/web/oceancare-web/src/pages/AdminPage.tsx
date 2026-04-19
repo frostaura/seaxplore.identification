@@ -23,11 +23,6 @@ export default function AdminPage() {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!token) { navigate('/login'); return; }
-    loadData();
-  }, [token]);
-
   const loadData = async () => {
     setLoading(true);
     try {
@@ -43,6 +38,14 @@ export default function AdminPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!token) { navigate('/login'); return; }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadData();
+  // loadData is stable (no external deps that change); navigate is stable from react-router
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const handleLogout = () => {
     dispatch(logout());

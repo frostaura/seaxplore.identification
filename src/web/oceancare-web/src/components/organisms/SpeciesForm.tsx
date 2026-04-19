@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { Species, MarineAttribute, Category } from '../../types';
 import api from '../../services/api';
 
@@ -15,28 +15,22 @@ interface AttrEntry {
   value: string;
 }
 
+function initAttrValues(species: Species | null, attributes: MarineAttribute[]): AttrEntry[] {
+  return attributes.map((a) => ({
+    attributeId: a.id,
+    value: species?.attributes.find((av) => av.attributeId === a.id)?.value ?? '',
+  }));
+}
+
 export default function SpeciesForm({ species, attributes, categories, onSave, onCancel }: Props) {
   const [scientificName, setScientificName] = useState(species?.scientificName ?? '');
   const [commonName, setCommonName] = useState(species?.commonName ?? '');
   const [description, setDescription] = useState(species?.description ?? '');
   const [imageUrl, setImageUrl] = useState(species?.imageUrl ?? '');
   const [categoryId, setCategoryId] = useState<number>(species?.categoryId ?? (categories[0]?.id ?? 0));
-  const [attrValues, setAttrValues] = useState<AttrEntry[]>([]);
+  const [attrValues, setAttrValues] = useState<AttrEntry[]>(() => initAttrValues(species, attributes));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (species) {
-      setAttrValues(
-        attributes.map((a) => ({
-          attributeId: a.id,
-          value: species.attributes.find((av) => av.attributeId === a.id)?.value ?? '',
-        }))
-      );
-    } else {
-      setAttrValues(attributes.map((a) => ({ attributeId: a.id, value: '' })));
-    }
-  }, [species, attributes]);
 
   const handleAttrChange = (attrId: number, value: string) => {
     setAttrValues((prev) => prev.map((e) => (e.attributeId === attrId ? { ...e, value } : e)));
@@ -62,8 +56,9 @@ export default function SpeciesForm({ species, attributes, categories, onSave, o
         await api.post('/api/admin/species', payload);
       }
       onSave();
-    } catch (err: any) {
-      setError(err.response?.data ?? 'Failed to save. Check that the API is running.');
+    } catch (err) {
+      const apiErr = err as { response?: { data?: string } };
+      setError(apiErr.response?.data ?? 'Failed to save. Check that the API is running.');
     } finally {
       setSaving(false);
     }

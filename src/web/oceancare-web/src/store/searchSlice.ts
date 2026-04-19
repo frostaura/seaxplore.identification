@@ -23,8 +23,9 @@ export const performSearch = createAsyncThunk(
     try {
       const res = await api.get<SearchResult[]>('/api/search', { params: { q: query, topK: 12 } });
       return res.data;
-    } catch (e: any) {
-      return rejectWithValue(e.response?.data || 'Search failed');
+    } catch (e) {
+      const err = e as { response?: { data?: string } };
+      return rejectWithValue(err.response?.data || 'Search failed');
     }
   }
 );

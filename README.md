@@ -1,129 +1,181 @@
 <p align="center">
-  <img src="https://github.com/frostaura/ai.toolkit.gaia/blob/main/README.icon.png?raw=true" alt="Gaia" width="300" />
+  <img src="https://github.com/user-attachments/assets/2aa3817b-f4a4-4dc1-92bf-a44147e7b45b" alt="OceanCare" width="700" />
 </p>
 
-<h1 align="center"><b>Gaia</b></h1>
-<h3 align="center">full-stack apps. enterprise-grade. maintainable. customizable.</h3>
-<p align="center"><i>Designed to be installed as a GitHub Copilot plugin</i></p>
+<h1 align="center">🐠 OceanCare</h1>
+<h3 align="center">Semantic Search Engine for Marine Life</h3>
 
 ---
 
-[![Version 8](https://img.shields.io/badge/Version-9-purple.svg)]()
+[![.NET](https://img.shields.io/badge/.NET-10.0-purple.svg)](https://dotnet.microsoft.com/)
+[![React](https://img.shields.io/badge/React-18-blue.svg)](https://react.dev/)
+[![Redux](https://img.shields.io/badge/Redux-Toolkit-764ABC.svg)](https://redux-toolkit.js.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Copilot](https://img.shields.io/badge/GitHub-Copilot-blue.svg)]()
-[![GitHub Copilot CLI](https://img.shields.io/badge/GitHub-Copilot%20CLI-blue.svg)]()
-[![Claude Code](https://img.shields.io/badge/Claude-Code-orange.svg)]()
 
 ---
 
-## What is Gaia?
+## What is OceanCare?
 
-Gaia is a **team of AI agents** designed to build and evolve software using **spec-driven development**.
-You describe your goal; Gaia coordinates architecture, implementation, testing, documentation and so on.
+OceanCare is a full-stack semantic search engine for marine life — corals, fish, jellyfish, sea turtles, and more. Describe what you're looking for in plain natural language and OceanCare finds the closest semantic matches in real time.
 
----
+### Example queries
 
-## Install the Gaia plugin locally
-> This can be done after any changes to this repo / system in order to continuously have the latest version of the Gaia system installed globally.
+- *"a red coral with branching antler-like tips"*
+- *"a small colorful fish with orange and white stripes"*
+- *"a bioluminescent creature that glows in the dark ocean"*
+- *"a large sea turtle with a beautifully patterned shell"*
 
-`copilot plugin install ./` *note: the absolute path to the plugin should be used here.*
-
----
-
-## How Gaia Works (Adaptive Spec-Driven SDLC)
-
-- `docs/` is the **source of truth** for requirements and architecture.
-- **No drift**:
-  - If a spec describes a feature, it must exist in code.
-  - If code changes behavior, the spec must be updated.
-- New work starts with **intake-led refinement** and **solutions architecture**, not direct coding.
-- Gaia adapts the SDLC to the **complexity of the task**, but always keeps architecture review, planning, QA, and release validation in the loop.
-- Gaia assembles a **virtual team on the fly**: intake orchestrator, solutions architect, implementation planner, software engineer, tester, and release engineer.
-- Each agent should get only the tools required for its role so read-only analysis stays read-only and delivery ownership stays clear.
-- Agents may call each other directly when prerequisites are satisfied, and the plan should expose safe parallel branches instead of forcing unnecessary serialization.
-- Planning happens **after architecture** so the execution tree reflects the target solution, estimates, dependencies, QA work, and CI or deployment gates.
-- QA is always present in the process and can veto weak completion claims.
-
-```mermaid
-flowchart LR
-    Request[Request] --> Intake[Intake & Refine]
-    Intake --> Design[Architect]
-    Design --> Plan[Plan]
-    Plan --> Build[Engineer]
-    Build --> Test[Tester]
-    Test -->|rework| Plan
-    Test -->|approved| Release[Release]
-```
-
-**Virtual team:**
-
-- Intake orchestrator owns intake, refinement, complexity classification, and the initial graph.
-- Solutions architect owns `docs/` and architecture decisions.
-- Implementation planner creates the branch-aware execution tree in `gaia_plan.md`.
-- Software engineer owns implementation and stabilization.
-- Tester validates behavior, regression risk, and quality gates continuously.
-- Release engineer validates CI and delivery gates.
-
-Shared workflow policy lives in **`AGENTS.md`** so agent files can stay role-specific without repeating the entire contract.
-
-The workflow contract lives in **`AGENTS.md`**.
+Results refine as you type — narrowing from broad descriptions to exact matches.
 
 ---
 
-## Using Gaia
+## Features
 
-### In VS Code (recommended)
+- 🔍 **Semantic Search** — Natural language queries matched via cosine-similarity over TF-IDF embeddings (pluggable for OpenAI/Ollama)
+- ⚡ **Real-time results** — Search results update as you type with 400ms debounce
+- 🎴 **Rich species cards** — Images, similarity scores, category tags, and dynamic attributes
+- 🔌 **Plugin architecture** — Swap the embedding model without changing application code
+- 🔐 **Admin panel** — JWT-authenticated management for species, attributes, and categories
+- 🏷️ **Dynamic attributes** — Every marine species attribute is configurable (Color, Pattern, Depth, Bioluminescent, etc.)
+- 🐳 **Docker-ready** — Full stack runs with a single `docker-compose up`
 
-1. Open your project folder in VS Code
-2. Enable GitHub Copilot
-3. Start a chat and describe what you want
+---
 
-### In the Terminal (Copilot CLI)
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, Vite, Redux Toolkit, TypeScript |
+| Backend | .NET 10, ASP.NET Core Web API |
+| Database | SQLite via Entity Framework Core |
+| Auth | JWT Bearer tokens |
+| Embeddings | TF-IDF cosine similarity (pluggable) |
+| Deployment | Docker Compose |
+
+---
+
+## Quick Start
+
+### Option 1 — Docker Compose (recommended)
 
 ```bash
-npm i -g @github/copilot && copilot -p "<your project request>" --yolo
+docker-compose up --build
 ```
 
-Example:
+- Frontend: http://localhost:3000
+- API: http://localhost:5000
+- Swagger: http://localhost:5000/swagger
 
+### Option 2 — Local development
+
+**API:**
 ```bash
-copilot -p "Create a REST API for a blog with posts and comments"  --yolo
+cd src/api/OceanCare.Api
+dotnet run
+# API runs at http://localhost:5103
+```
+
+**Frontend:**
+```bash
+cd src/web/oceancare-web
+npm install
+npm run dev
+# UI runs at http://localhost:5173
 ```
 
 ---
 
-### Advanced Mode
-The below may be used to simulate a workflow execution by running copilot cli in headless mode.
+## Default Admin Credentials
 
-*Basic chaining for workflows*
-```bash
-copilot -p "prompt 1" --yolo && copilot -p "prompt 2" --yolo && copilot -p "prompt 3" --yolo
+| Field | Value |
+|---|---|
+| Username | `admin` |
+| Password | `OceanCare2024!` |
+
+> ⚠️ Change the JWT key and admin password before deploying to production.
+
+---
+
+## Seed Data
+
+OceanCare ships with **16 real marine species** across 4 categories:
+
+| Category | Species |
+|---|---|
+| 🪸 Coral | Brain Coral, Staghorn Coral, Red Sea Whip Coral, Blue Coral, Mushroom Coral |
+| 🐠 Fish | Clownfish, Mandarin Fish, Lionfish, Blue Tang, Bioluminescent Dragonfish, Parrotfish |
+| 🪼 Jellyfish | Moon Jellyfish, Pacific Sea Nettle, Comb Jelly |
+| 🐢 Sea Turtle | Green Sea Turtle, Hawksbill Sea Turtle |
+
+Each species has **8 dynamic attributes**: Color, Pattern, Size, Depth Range, Habitat, Diet, Bioluminescent, Conservation Status.
+
+---
+
+## Plugin Architecture
+
+Swap the embedding engine by implementing `IEmbeddingPlugin`:
+
+```csharp
+public class MyEmbeddingPlugin : IEmbeddingPlugin
+{
+    public string Name => "My Custom Embeddings";
+    public string Version => "1.0.0";
+    public string Description => "Uses my preferred embedding model.";
+    public int EmbeddingDimension => 1536;
+
+    public async Task<float[]> GenerateEmbeddingAsync(string text, CancellationToken ct = default)
+    {
+        // Call OpenAI, Ollama, HuggingFace, etc.
+    }
+}
 ```
 
-*Recursive chaining for continuous workflows*
-```bash
-while true; do copilot -p "prompt 1" --yolo && copilot -p "prompt 2" --yolo && copilot -p "prompt 3" --yolo; done
+Register in `Program.cs`:
+```csharp
+builder.Services.AddSingleton<IEmbeddingPlugin, MyEmbeddingPlugin>();
 ```
 
 ---
 
-## Disclaimers
-Note that the current configuration for the usage of Gaia's MCP server, is remote. This means your data will safely live on the Gaia secure server.
+## Screenshots
 
-*What gets stored*
-- Self-improvement requests that Gaia automatically logs when struggling with a given problem. This helps us auto-improve Gaia on the backend as new "issues" with the Gaia process gets logged by you fine folks. In turn we push a new optimized version of Gaia for free to everyone. An improved one.
-- Task items for Gaia plans. This is merely a persistent tracking mechanism for your Gaia to stay anchored. Because this is a remote MCP, it works perfectly in the GitHub Copilot web (coding agent), for a completely hands-off approach. All tasks are segregated by project name to ensure no overlap.
-- Memory items for Gaia for the project, like the above, is securely persisted so you can access your project memories (and tasks), from remote sources and effortlessly switch between them. Even have them run in parallel to pick up different tasks.
+### Search Interface
+![Search](https://github.com/user-attachments/assets/4a0bf128-2274-434e-bf43-bf15afe8078b)
 
-*What doesn't get stored*
-- Any user PII
-- Actual project code
-- System and test specs (or any documentation)
-
-**If you prefer not to take advantage of the Gaia remote MCP, feel free to configure the MCP server (here locally) to use STDIO instead of HTTP and configure your MCP configs to point to that instead, for a completely local experience.**
+### Admin Panel
+![Admin](https://github.com/user-attachments/assets/448fae3c-939b-4e34-b9d4-16af0ed91621)
 
 ---
 
-<p align="center">
-  <i>"In Greek mythology, Gaia is the personification of Earth and the ancestral mother of all life."</i>
-</p>
+## Project Structure
+
+```
+src/
+  api/OceanCare.Api/
+    Domain/
+      Models/          ← Species, Category, MarineAttribute, SearchEmbedding, Admin
+      Interfaces/      ← IPlugin, IEmbeddingPlugin, ISearchService
+    Infrastructure/
+      Data/            ← EF Core DbContext + DataSeeder
+      Plugins/         ← TfIdfEmbeddingPlugin (built-in)
+    Application/
+      Services/        ← SearchService (cosine similarity)
+    Controllers/       ← Search, Species, Admin
+    Models/DTOs/       ← Request/response DTOs
+  web/oceancare-web/
+    src/
+      components/
+        atoms/         ← AttributeBadge
+        molecules/     ← SpeciesCard
+        organisms/     ← SearchBar, SpeciesForm, AttributeManager
+      pages/           ← SearchPage, LoginPage, AdminPage
+      store/           ← Redux slices (search, auth)
+      services/        ← Axios API client
+      types/           ← TypeScript interfaces
+docker-compose.yml
+```
+
+---
+
+<p align="center"><i>Powered by Gaia · Built with ❤️ for the ocean</i></p>

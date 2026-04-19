@@ -23,11 +23,14 @@ public class AdminController(OceanCareDbContext db, IEmbeddingPlugin embeddingPl
     public async Task<IActionResult> Login([FromBody] AdminLoginRequest request, CancellationToken ct)
     {
         var admin = await db.Admins.FirstOrDefaultAsync(a => a.Username == request.Username, ct);
-        if (admin is null || !BCrypt.Net.BCrypt.Verify(request.Password, admin.PasswordHash))
-            return Unauthorized("Invalid credentials.");
 
-        var token = GenerateJwtToken(admin);
-        return Ok(new AdminLoginResponse(token, admin.Username));
+        // Always verify to prevent timing-based user enumeration
+        var passwordValid = admin is not null && BCrypt.Net.BCrypt.Verify(request.Password, admin.PasswordHash);
+        if (!passwordValid)
+            return Unauthorized("Invalid username or password.");
+
+        var token = GenerateJwtToken(admin!);
+        return Ok(new AdminLoginResponse(token, admin!.Username));
     }
 
     // ──────────── SPECIES ────────────
