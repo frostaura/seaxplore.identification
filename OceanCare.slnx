@@ -4,4 +4,7 @@
       <Project Path="src/api/OceanCare.Api/OceanCare.Api.csproj" />
     </Folder>
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OceanCare.Api.Tests/OceanCare.Api.Tests.csproj" />
+  </Folder>
 </Solution>
