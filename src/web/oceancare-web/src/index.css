@@ -1,0 +1,40 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: #03045e;
+  color: #caf0f8;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #90e0ef;
+}
+
+input::placeholder {
+  color: rgba(202, 240, 248, 0.4);
+}
+
+select option {
+  background: #023e8a;
+  color: #caf0f8;
+}
+
+@keyframes spin {
+  from { transform: translateY(-50%) rotate(0deg); }
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(3, 4, 94, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 180, 216, 0.4);
+  border-radius: 4px;
+}
